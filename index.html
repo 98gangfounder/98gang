@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>98gang — roster</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: Tahoma, Verdana, Arial, sans-serif;
+      color:#101018;
+      /* IMPORTANT: no 'fixed' to avoid crashes with heavy gif */
+      background: #000 url("bg.gif") center/cover no-repeat;
+    }
+    .overlay{ position:fixed; inset:0; background: rgba(0,0,0,.55); pointer-events:none; z-index:0; }
+    .wrap{ max-width: 980px; margin: 0 auto; padding: 18px 12px; position:relative; z-index:1; }
+
+    .window{
+      border:1px solid #4a0f16;
+      background:#d6d6d6;
+      box-shadow: 10px 10px 0 rgba(0,0,0,.45);
+      position: relative;
+    }
+
+    .titlebar{
+      background: linear-gradient(#d3202f, #7d0f19);
+      color:#fff;
+      padding: 8px 10px;
+      font-weight:700;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      user-select:none;
+      border-bottom:1px solid rgba(0,0,0,.35);
+    }
+
+    .controls{ display:flex; gap:6px; align-items:center; }
+    .controls span{
+      display:inline-flex;
+      width:16px; height:16px;
+      align-items:center; justify-content:center;
+      background:#ffe1e4; border:1px solid rgba(0,0,0,.35);
+      color:#2a0b0f; font-size:12px; line-height:1;
+      font-family: "Courier New", monospace;
+    }
+
+    .content{ padding: 12px; padding-bottom: 32px; }
+    .panel{ border:1px solid #9b9b9b; background:#efefef; padding: 10px; margin-bottom: 10px; }
+
+    .topcard{
+      display:flex;
+      gap:12px;
+      align-items:stretch;
+    }
+    @media (max-width: 640px){ .topcard{ flex-direction:column; } }
+
+    .idphoto{
+      width:120px; min-width:120px;
+      border:1px solid #7e7e7e;
+      background:#dcdcdc;
+      box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #b0b0b0;
+      padding:6px;
+    }
+    .idphoto img{
+      width:100%;
+      height:140px;
+      object-fit:cover;
+      display:block;
+      border:1px solid rgba(0,0,0,.25);
+      background:#bbb;
+    }
+
+    .idcard{
+      flex:1;
+      border:1px solid #7e7e7e;
+      background: linear-gradient(#ffffff, #e7e7e7);
+      box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #b0b0b0;
+      padding:10px;
+    }
+    .idtop{
+      border-bottom:1px dashed rgba(0,0,0,.25);
+      padding-bottom:6px;
+      margin-bottom:8px;
+      font-weight:700;
+      letter-spacing:.3px;
+    }
+    .small{ font-size:12px; color:#333; }
+    .mono{ font-family: "Courier New", monospace; }
+    a.mail{ color:#7d0f19; }
+
+    .row{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+    @media (max-width: 860px){ .row{ grid-template-columns:1fr; } }
+
+    a.btn{
+      display:block;
+      text-decoration:none;
+      color:#000;
+      padding: 10px;
+      border:1px solid #7e7e7e;
+      background: linear-gradient(#ffffff, #dcdcdc);
+      box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #b0b0b0;
+    }
+    a.btn:hover{ background: linear-gradient(#fff7cc, #e7d59a); }
+    a.btn:active{
+      box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #909090;
+      transform: translate(1px,1px);
+    }
+
+    .member{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:8px;
+      margin-top:8px;
+    }
+    .memberline{
+      border:1px solid rgba(0,0,0,.15);
+      background: rgba(255,255,255,.55);
+      padding:8px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .mname{ font-weight:700; letter-spacing:.2px; }
+    .mlinks{ display:flex; gap:8px; flex-wrap:wrap; }
+    .mini{
+      font-size:12px;
+      padding:6px 8px;
+      border:1px solid #7e7e7e;
+      background: linear-gradient(#ffffff, #dcdcdc);
+      box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #b0b0b0;
+      text-decoration:none;
+      color:#000;
+    }
+
+    .copyright{
+      position:absolute; right:10px; bottom:8px;
+      font-size:12px; color:#333;
+      font-family:"Courier New", monospace;
+      opacity:.9; pointer-events:none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="overlay"></div>
+
+  <div class="wrap">
+    <div class="window">
+
+      <div class="titlebar">
+        <div>98gang — roster control panel</div>
+        <div class="controls"><span>☠</span><span>☠</span><span>☠</span></div>
+      </div>
+
+      <div class="content">
+
+        <div class="panel">
+          <div class="topcard">
+            <div class="idphoto">
+              <img src="prof-pic.jpg" alt="98gang">
+            </div>
+
+            <div class="idcard">
+              <div class="idtop">GANG CARD</div>
+              <div class="small"><b>Name:</b> 98gang</div>
+              <div class="small"><b>Status:</b> <span class="mono">ACTIVE / ONLINE</span></div>
+              <div class="small"><b>Contact:</b> <a class="mail" href="mailto:98ganginthisb1tch@gmail.com">98ganginthisb1tch@gmail.com</a></div>
+              <div class="small"><b>Hub:</b> <span class="mono">98gangfounder.github.io</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="panel">
+            <b>Members</b>
+
+            <div class="member">
+              <div class="memberline">
+                <div class="mname">SayRex</div>
+                <div class="mlinks">
+                  <a class="mini" href="https://98gangfounder.github.io/SayRex/" target="_blank">Profile</a>
+                  <a class="mini" href="https://open.spotify.com/artist/6Gk9FDaTJNMXS1LL6uK30s" target="_blank">Spotify</a>
+                  <a class="mini" href="https://www.youtube.com/@98gangfounder" target="_blank">YouTube</a>
+                </div>
+              </div>
+
+              <div class="memberline">
+                <div class="mname">SB28</div>
+                <div class="mlinks">
+                  <a class="mini" href="https://98gangfounder.github.io/sb28/" target="_blank">Profile</a>
+                  <a class="mini" href="https://open.spotify.com/artist/4M3lU9S2EOriC8OBbrDgAK" target="_blank">Spotify</a>
+                  <a class="mini" href="https://scratchboi28.bandcamp.com/" target="_blank">Bandcamp</a>
+                </div>
+              </div>
+
+              <div class="memberline">
+                <div class="mname">duckie</div>
+                <div class="mlinks">
+                  <a class="mini" href="https://98gangfounder.github.io/duckie/" target="_blank">Profile</a>
+                  <a class="mini" href="https://www.youtube.com/@duckiebeats" target="_blank">YouTube</a>
+                  <a class="mini" href="https://soundcloud.com/duckiebeats" target="_blank">SoundCloud</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <b>External / Info</b>
+            <div style="height:8px"></div>
+            <a class="btn" target="_blank" href="https://phonk.fandom.com/wiki/SayRex">SayRex — Phonk Wiki</a>
+            <div style="height:8px"></div>
+            <a class="btn" target="_blank" href="https://phonk.fandom.com/wiki/SB28">SB28 — Phonk Wiki</a>
+            <div style="height:8px"></div>
+            <a class="btn" target="_blank" href="https://phonk.fandom.com/wiki/Duckie">duckie — Phonk Wiki</a>
+            <div style="height:8px"></div>
+            <a class="btn" target="_blank" href="https://98gangfounder.bandcamp.com/">98gangfounder — Bandcamp</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="copyright">© 2014 98gang</div>
+    </div>
+  </div>
+</body>
+</html>
