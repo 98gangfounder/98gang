@@ -1,9 +1,9 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>98gang — Watchlist Dossier</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>98gang — watchlist dossier</title>
 
   <style>
     body{
@@ -11,18 +11,28 @@
       min-height:100vh;
       font-family: Tahoma, Verdana, Arial, sans-serif;
       color:#101018;
-      background: #000 url("bg.gif") center/cover no-repeat;
+      background: #000 url("bg.gif") center/cover no-repeat; /* no fixed */
     }
-    .overlay{ position:fixed; inset:0; background: rgba(0,0,0,.58); pointer-events:none; z-index:0; }
-    .wrap{ max-width: 1040px; margin: 0 auto; padding: 18px 12px; position:relative; z-index:1; }
+    .overlay{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.58);
+      pointer-events:none;
+      z-index:-1;
+    }
+    .wrap{
+      width:min(1080px, 100%);
+      margin:0 auto;
+      padding:18px 12px;
+      position:relative;
+      z-index:10;
+    }
 
     .window{
       border:1px solid #4a0f16;
       background:#d6d6d6;
       box-shadow: 10px 10px 0 rgba(0,0,0,.45);
-      position: relative;
+      position:relative;
     }
-
     .titlebar{
       background: linear-gradient(#d3202f, #7d0f19);
       color:#fff;
@@ -41,312 +51,10 @@
       align-items:center; justify-content:center;
       background:#ffe1e4; border:1px solid rgba(0,0,0,.35);
       color:#2a0b0f; font-size:12px; line-height:1;
-      font-family: "Courier New", monospace;
-    }
-
-    .content{ padding: 12px; padding-bottom: 40px; }
-
-    .panel{
-      border:1px solid #9b9b9b;
-      background:#efefef;
-      padding: 10px;
-      margin-bottom: 10px;
-      position:relative;
-    }
-
-    /* hazard banner */
-    .hazard{
-      border:1px solid rgba(0,0,0,.2);
-      background:
-        repeating-linear-gradient(135deg,
-          #111 0px, #111 12px,
-          #ffd400 12px, #ffd400 24px
-        );
-      padding:10px;
-      margin-bottom:10px;
-    }
-    .hazard .inner{
-      background: rgba(255,255,255,.92);
-      border:1px solid rgba(0,0,0,.25);
-      padding:10px;
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      flex-wrap:wrap;
-    }
-    .hazard b{ letter-spacing:.3px; }
-    .mono{ font-family: "Courier New", monospace; }
-
-    /* dossier card */
-    .topcard{
-      display:flex;
-      gap:12px;
-      align-items:stretch;
-    }
-    @media (max-width: 740px){ .topcard{ flex-direction:column; } }
-
-    .idphoto{
-      width:140px;
-      min-width:140px;
-      border:1px solid #7e7e7e;
-      background:#dcdcdc;
-      box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #b0b0b0;
-      padding:6px;
-    }
-    .idphoto img{
-      width:100%;
-      height:170px;
-      object-fit:cover;
-      display:block;
-      border:1px solid rgba(0,0,0,.25);
-      background:#bbb;
-    }
-
-    .idcard{
-      flex:1;
-      border:1px solid #7e7e7e;
-      background: linear-gradient(#ffffff, #e7e7e7);
-      box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #b0b0b0;
-      padding:10px;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .stamp{
-      position:absolute;
-      right:14px;
-      top:12px;
-      transform: rotate(-10deg);
-      border:3px solid #b10f1d;
-      color:#b10f1d;
-      font-weight:900;
-      letter-spacing:2px;
-      padding:10px 12px;
-      font-size:14px;
-      text-transform:uppercase;
-      opacity:.85;
-      background: rgba(255,255,255,.6);
-    }
-
-    .idtop{
-      border-bottom:1px dashed rgba(0,0,0,.25);
-      padding-bottom:6px;
-      margin-bottom:8px;
-      font-weight:700;
-      letter-spacing:.3px;
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    .tag{
-      font-size:11px;
-      font-weight:700;
-      padding:2px 6px;
-      border:1px solid rgba(0,0,0,.25);
-      background:#f6f6f6;
-      text-transform:uppercase;
-    }
-    .tag.red{ background:#ffe1e4; border-color:#b10f1d; color:#7d0f19; }
-
-    .idtable{ width:100%; border-collapse:collapse; font-size:12px; }
-    .idtable td{
-      padding:5px 7px;
-      border:1px solid rgba(0,0,0,.12);
-      background: rgba(255,255,255,.65);
-      vertical-align:top;
-    }
-    .k{ width:170px; color:#333; font-weight:700; }
-
-    a.mail{ color:#7d0f19; }
-    .small{ font-size:12px; color:#333; }
-
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-    }
-    @media (max-width: 920px){ .grid{ grid-template-columns:1fr; } }
-
-    a.btn{
-      display:block;
-      text-decoration:none;
-      color:#000;
-      padding: 10px;
-      border:1px solid #7e7e7e;
-      background: linear-gradient(#ffffff, #dcdcdc);
-      box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #b0b0b0;
-    }
-    a.btn:hover{ background: linear-gradient(#fff7cc, #e7d59a); }
-    a.btn:active{
-      box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #909090;
-      transform: translate(1px,1px);
-    }
-
-    .memberline{
-      border:1px solid rgba(0,0,0,.15);
-      background: rgba(255,255,255,.65);
-      padding:8px;
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-    }
-    .mname{ font-weight:700; letter-spacing:.2px; }
-    .mlinks{ display:flex; gap:8px; flex-wrap:wrap; }
-    .mini{
-      font-size:12px;
-      padding:6px 8px;
-      border:1px solid #7e7e7e;
-      background: linear-gradient(#ffffff, #dcdcdc);
-      box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #b0b0b0;
-      text-decoration:none;
-      color:#000;
-    }
-
-    .copyright{
-      position:absolute;
-      right:10px;
-      bottom:8px;
-      font-size:12px;
-      color:#333;
       font-family:"Courier New", monospace;
-      opacity:.9;
-      pointer-events:none;
     }
 
-   
-  </style>
-</head>
+    .content{ padding:12px; padding-bottom:44px; }
 
-<body>
-  <div class="overlay"></div>
-
-  <div class="wrap">
-    <div class="window">
-      <div class="titlebar">
-        <div>98gang — international watchlist dossier</div>
-        <div class="controls"><span>☠</span><span>☠</span><span>☠</span></div>
-      </div>
-
-      <div class="content">
-
-        <div class="hazard">
-          <div class="inner">
-            <div><b>NOTICE:</b> HIGH DISTURBANCE AESTHETIC / RAW AUDIO MATERIAL</div>
-            <div class="mono">CASE ID: 98G-2014-ARCHIVE</div>
-            <div class="mono">STATUS: ACTIVE / ONLINE</div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="topcard">
-            <div class="idphoto">
-              <img src="prof-pic.jpg" alt="98gang">
-            </div>
-
-            <div class="idcard">
-              <div class="stamp">WATCHLIST</div>
-
-              <div class="idtop">
-                <div>ORGANIZATION DOSSIER</div>
-                <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                  <span class="tag red">PRIORITY</span>
-                  <span class="tag">OPEN SOURCE</span>
-                  <span class="tag">ART/BRAND</span>
-                </div>
-              </div>
-
-              <table class="idtable">
-                <tr>
-                  <td class="k">Subject</td>
-                  <td><b>98gang</b></td>
-                </tr>
-                <tr>
-                  <td class="k">Type</td>
-                  <td>Music collective / underground releases</td>
-                </tr>
-                <tr>
-                  <td class="k">Threat level (aesthetic)</td>
-                  <td class="mono">RED / DISTURBING CONTENT</td>
-                </tr>
-                <tr>
-                  <td class="k">Known for</td>
-                  <td>Raw sound, lo-fi artifacts, dark themes, internet-era mythology</td>
-                </tr>
-                <tr>
-                  <td class="k">Primary contact</td>
-                  <td><a class="mail" href="mailto:98ganginthisb1tch@gmail.com">98ganginthisb1tch@gmail.com</a></td>
-                </tr>
-                <tr>
-                  <td class="k">Hub</td>
-                  <td class="mono">98gangfounder.github.io</td>
-                </tr>
-              </table>
-
-             
-            </div>
-          </div>
-        </div>
-
-        <div class="grid">
-          <div class="panel">
-            <b>Subjects / Members</b>
-            <div style="height:10px"></div>
-
-            <div class="memberline">
-              <div class="mname">SayRex</div>
-              <div class="mlinks">
-                <a class="mini" href="https://98gangfounder.github.io/SayRex/" target="_blank">Profile</a>
-                <a class="mini" href="https://open.spotify.com/artist/6Gk9FDaTJNMXS1LL6uK30s" target="_blank">Spotify</a>
-                <a class="mini" href="https://www.youtube.com/@98gangfounder" target="_blank">YouTube</a>
-              </div>
-            </div>
-
-            <div style="height:8px"></div>
-
-            <div class="memberline">
-              <div class="mname">SB28</div>
-              <div class="mlinks">
-                <a class="mini" href="https://98gangfounder.github.io/sb28/" target="_blank">Profile</a>
-                <a class="mini" href="https://open.spotify.com/artist/4M3lU9S2EOriC8OBbrDgAK" target="_blank">Spotify</a>
-                <a class="mini" href="https://scratchboi28.bandcamp.com/" target="_blank">Bandcamp</a>
-              </div>
-            </div>
-
-            <div style="height:8px"></div>
-
-            <div class="memberline">
-              <div class="mname">duckie</div>
-              <div class="mlinks">
-                <a class="mini" href="https://98gangfounder.github.io/duckie/" target="_blank">Profile</a>
-                <a class="mini" href="https://www.youtube.com/@duckiebeats" target="_blank">YouTube</a>
-                <a class="mini" href="https://soundcloud.com/duckiebeats" target="_blank">SoundCloud</a>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="panel">
-            <b>Open sources / External</b>
-            <div style="height:8px"></div>
-
-            <a class="btn" target="_blank" href="https://98gangfounder.bandcamp.com/">98gangfounder — Bandcamp</a>
-            <div style="height:8px"></div>
-            <a class="btn" target="_blank" href="https://phonk.fandom.com/wiki/SayRex">SayRex — Phonk Wiki</a>
-            <div style="height:8px"></div>
-            <a class="btn" target="_blank" href="https://phonk.fandom.com/wiki/SB28">SB28 — Phonk Wiki</a>
-            <div style="height:8px"></div>
-            <a class="btn" target="_blank" href="https://phonk.fandom.com/wiki/Duckie">duckie — Phonk Wiki</a>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="copyright">© 2014 98gang</div>
-    </div>
-  </div>
-</body>
-</html>
+    .hazard{
+      border:1px solid 
