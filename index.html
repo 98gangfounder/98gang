@@ -84,6 +84,7 @@
       margin-bottom:10px;
     }
 
+    /* dossier top */
     .topgrid{
       display:grid;
       grid-template-columns: 220px 1fr;
@@ -94,6 +95,7 @@
       .topgrid{ grid-template-columns: 1fr; }
     }
 
+    /* logo box square 1:1 */
     .photoBox{
       width:220px;
       aspect-ratio: 1 / 1;
@@ -216,12 +218,12 @@
     .role{ white-space:nowrap; font-weight:700; color:#333; }
     .idcol{ white-space:nowrap; font-family:"Courier New", monospace; color:#333; }
 
-    /* LINKS: plain text, underlined (not buttons) */
+    /* LINKS: plain text, not buttons */
     .linkwrap{
       display:flex;
-      gap:10px;
+      gap:12px;
       align-items:baseline;
-      flex-wrap:nowrap; /* collapsed: single line */
+      flex-wrap:nowrap;
       white-space:nowrap;
     }
     .lnk{
@@ -230,45 +232,15 @@
       border-bottom:1px dotted rgba(0,0,0,.55);
       padding-bottom:1px;
     }
-    .lnk:hover{
-      border-bottom-color:#000;
-    }
+    .lnk:hover{ border-bottom-color:#000; }
+
     .missing{
       color:#444;
       opacity:.55;
       cursor:help;
       border-bottom:1px dotted rgba(0,0,0,.35);
-    }
-
-    .more{
-      color:#000;
-      text-decoration:none;
-      border-bottom:1px solid rgba(0,0,0,.8);
-      font-weight:700;
-      letter-spacing:.2px;
-      cursor:pointer;
       padding-bottom:1px;
-      margin-left:6px;
     }
-    .more:hover{ border-bottom-color:#000; }
-
-    /* collapsed state: show only first 3 links (Wiki/YouTube/Spotify) */
-    tr:not(.expanded) .linkwrap .lnk:nth-of-type(n+4),
-    tr:not(.expanded) .linkwrap .missing:nth-of-type(n+4){
-      display:none;
-    }
-
-    /* expanded state: allow wrapping -> row becomes "thicker" */
-    tr.expanded .linkwrap{
-      flex-wrap:wrap;
-      white-space:normal;
-    }
-
-    /* MORE/Less text switch */
-    tr.expanded .more::after{ content:"[LESS]"; }
-    tr:not(.expanded) .more::after{ content:"[MORE]"; }
-    .more{ color:transparent; }
-    .more::after{ color:#000; }
 
     @media (max-width: 900px){
       .tablescroll{ overflow:auto; }
@@ -353,14 +325,14 @@
               </thead>
               <tbody>
 
-                <!-- SayRex -->
+                <!-- Order: Wiki / YouTube / Spotify / Bandcamp / SoundCloud / Audiotool -->
+
                 <tr>
                   <td class="idcol">98G-SR-098</td>
                   <td><b>SayRex</b></td>
                   <td class="role">Founder / Producer / Rapper</td>
                   <td>
                     <div class="linkwrap">
-                      <!-- order: Wiki, YouTube, Spotify, Bandcamp, SoundCloud, Audiotool -->
                       <a class="lnk" target="_blank" href="https://phonk.fandom.com/wiki/SayRex">Phonk Wiki</a>
                       <a class="lnk" target="_blank" href="https://www.youtube.com/@98gangfounder">YouTube</a>
                       <a class="lnk" target="_blank" href="https://open.spotify.com/artist/6Gk9FDaTJNMXS1LL6uK30s">Spotify</a>
@@ -371,7 +343,6 @@
                   </td>
                 </tr>
 
-                <!-- Zack Reyes -->
                 <tr>
                   <td class="idcol">98G-ZR-003</td>
                   <td><b>Zack Reyes</b></td>
@@ -388,7 +359,6 @@
                   </td>
                 </tr>
 
-                <!-- SB28 -->
                 <tr>
                   <td class="idcol">98G-SB-028</td>
                   <td><b>SB28</b></td>
@@ -405,7 +375,6 @@
                   </td>
                 </tr>
 
-                <!-- duckie -->
                 <tr>
                   <td class="idcol">98G-DK-004</td>
                   <td><b>duckie</b></td>
@@ -432,20 +401,5 @@
       <div class="copyright">© 2014 98gang</div>
     </section>
   </main>
-
-  <script>
-    // Toggle expand/collapse per row via [MORE]/[LESS]
-    document.querySelectorAll('tbody tr').forEach(tr => {
-      const more = tr.querySelector('.more');
-      if(!more) return;
-
-      const toggle = () => tr.classList.toggle('expanded');
-
-      more.addEventListener('click', toggle);
-      more.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') toggle();
-      });
-    });
-  </script>
 </body>
 </html>
