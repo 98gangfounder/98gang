@@ -84,7 +84,6 @@
       margin-bottom:10px;
     }
 
-    /* dossier top */
     .topgrid{
       display:grid;
       grid-template-columns: 220px 1fr;
@@ -95,7 +94,6 @@
       .topgrid{ grid-template-columns: 1fr; }
     }
 
-    /* logo box: square 1:1 */
     .photoBox{
       width:220px;
       aspect-ratio: 1 / 1;
@@ -190,13 +188,13 @@
     }
     a.mail:hover{ border-bottom-color: rgba(177,15,29,.9); }
 
-    /* members DB table */
     .sectiontitle{
       font-weight:700;
       margin:0;
       letter-spacing:.2px;
     }
 
+    /* DB table */
     table.db{
       width:100%;
       border-collapse:collapse;
@@ -217,20 +215,75 @@
     }
     .role{ white-space:nowrap; font-weight:700; color:#333; }
     .idcol{ white-space:nowrap; font-family:"Courier New", monospace; color:#333; }
-    .links a{
+
+    /* link buttons */
+    .linkset{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      align-items:flex-start;
+    }
+    .lbtn, .morebtn{
+      position:relative;
+      display:inline-block;
+      font-size:12px;
+      padding:6px 8px;
+      border:1px solid #7e7e7e;
+      background: linear-gradient(#ffffff, #dcdcdc);
+      box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #b0b0b0;
       color:#000;
       text-decoration:none;
-      border-bottom:1px dotted rgba(0,0,0,.35);
-      margin-right:10px;
       white-space:nowrap;
-      display:inline-block;
-      margin-bottom:4px;
+      cursor:pointer;
+      user-select:none;
     }
-    .links a:hover{ border-bottom-color:#000; }
+    .lbtn:hover, .morebtn:hover{
+      background: linear-gradient(#fff7cc, #e7d59a);
+    }
+    .morebtn{
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+
+    /* missing link style + tooltip */
+    .missing{
+      opacity:.65;
+      cursor:not-allowed;
+    }
+    .missing:hover{
+      background: linear-gradient(#ffffff, #dcdcdc);
+    }
+    .missing[data-tip]:hover::after{
+      content: attr(data-tip);
+      position:absolute;
+      left:0;
+      top: calc(100% + 6px);
+      background: rgba(0,0,0,.88);
+      color:#fff;
+      padding:6px 8px;
+      border:1px solid rgba(255,255,255,.18);
+      font-size:12px;
+      border-radius:0;
+      z-index:9999;
+      min-width: 180px;
+      white-space:normal;
+      box-shadow: 6px 6px 0 rgba(0,0,0,.35);
+    }
+
+    /* collapsed: show only first 3 buttons + MORE */
+    tr:not(.expanded) .linkset .lbtn:nth-of-type(n+4){
+      display:none;
+    }
+    /* MORE button always visible */
+    tr.expanded .morebtn::before{ content:"LESS"; }
+    tr:not(.expanded) .morebtn::before{ content:"MORE"; }
+    /* hide the literal text inside button (so only ::before shows) */
+    .morebtn{ color:transparent; }
+    .morebtn::before{ color:#000; }
 
     @media (max-width: 900px){
       .tablescroll{ overflow:auto; }
-      table.db{ min-width: 760px; }
+      table.db{ min-width: 860px; }
     }
 
     .copyright{
@@ -306,58 +359,108 @@
                   <th style="width:140px;">ID</th>
                   <th style="width:200px;">NAME</th>
                   <th style="width:240px;">ROLE</th>
-                  <th>LINKS</th>
+                  <th>LINKS (TOP 3 + MORE)</th>
                 </tr>
               </thead>
               <tbody>
+
+                <!-- SayRex -->
                 <tr>
                   <td class="idcol">98G-SR-098</td>
                   <td><b>SayRex</b></td>
                   <td class="role">Founder / Producer / Rapper</td>
-                  <td class="links">
-                    <a target="_blank" href="https://open.spotify.com/artist/6Gk9FDaTJNMXS1LL6uK30s">Spotify</a>
-                    <a target="_blank" href="https://www.youtube.com/@98gangfounder">YouTube</a>
-                    <a target="_blank" href="https://soundcloud.com/98gangfounder">SoundCloud</a>
-                    <a target="_blank" href="https://98gangfounder.bandcamp.com/">Bandcamp</a>
-                    <a target="_blank" href="https://genius.com/artists/Sayrex">Genius</a>
-                    <a target="_blank" href="https://www.audiotool.com/user/d3athmane">Audiotool</a>
-                    <a target="_blank" href="https://phonk.fandom.com/wiki/SayRex">Wiki</a>
+                  <td>
+                    <div class="linkset">
+                      <!-- 1 Wiki -->
+                      <a class="lbtn" target="_blank" href="https://phonk.fandom.com/wiki/SayRex">Phonk Wiki</a>
+                      <!-- 2 YouTube -->
+                      <a class="lbtn" target="_blank" href="https://www.youtube.com/@98gangfounder">YouTube</a>
+                      <!-- 3 Spotify -->
+                      <a class="lbtn" target="_blank" href="https://open.spotify.com/artist/6Gk9FDaTJNMXS1LL6uK30s">Spotify</a>
+                      <!-- 4 Bandcamp -->
+                      <a class="lbtn" target="_blank" href="https://98gangfounder.bandcamp.com/">Bandcamp</a>
+                      <!-- 5 SoundCloud -->
+                      <a class="lbtn" target="_blank" href="https://soundcloud.com/98gangfounder">SoundCloud</a>
+                      <!-- 6 Audiotool -->
+                      <a class="lbtn" target="_blank" href="https://www.audiotool.com/user/d3athmane">Audiotool</a>
+
+                      <button class="morebtn" type="button">MORE</button>
+                    </div>
                   </td>
                 </tr>
 
+                <!-- Zack Reyes -->
                 <tr>
                   <td class="idcol">98G-ZR-003</td>
                   <td><b>Zack Reyes</b></td>
                   <td class="role">Producer</td>
-                  <td class="links">
-                    <a target="_blank" href="https://open.spotify.com/artist/0CKVsZTnpLwT2iYIwJzCzp">Spotify</a>
-                    <a target="_blank" href="https://www.audiotool.com/user/skittles761">Audiotool</a>
-                    <a target="_blank" href="https://genius.com/zackreyes">Genius</a>
-                    <a target="_blank" href="https://phonk.fandom.com/wiki/Zack_Reyes">Wiki</a>
-                    <a target="_blank" href="https://www.instagram.com/98gangzackreyes?igsh=MXRteWZuMmpqYmgwZw==">Instagram</a>
+                  <td>
+                    <div class="linkset">
+                      <!-- 1 Wiki -->
+                      <a class="lbtn" target="_blank" href="https://phonk.fandom.com/wiki/Zack_Reyes">Phonk Wiki</a>
+                      <!-- 2 YouTube (missing) -->
+                      <span class="lbtn missing" data-tip="No record in archives yet.">YouTube</span>
+                      <!-- 3 Spotify -->
+                      <a class="lbtn" target="_blank" href="https://open.spotify.com/artist/0CKVsZTnpLwT2iYIwJzCzp">Spotify</a>
+                      <!-- 4 Bandcamp (missing) -->
+                      <span class="lbtn missing" data-tip="No record in archives yet.">Bandcamp</span>
+                      <!-- 5 SoundCloud (missing) -->
+                      <span class="lbtn missing" data-tip="No record in archives yet.">SoundCloud</span>
+                      <!-- 6 Audiotool -->
+                      <a class="lbtn" target="_blank" href="https://www.audiotool.com/user/skittles761">Audiotool</a>
+
+                      <button class="morebtn" type="button">MORE</button>
+                    </div>
                   </td>
                 </tr>
 
+                <!-- SB28 -->
                 <tr>
                   <td class="idcol">98G-SB-028</td>
                   <td><b>SB28</b></td>
                   <td class="role">Producer</td>
-                  <td class="links">
-                    <a target="_blank" href="https://open.spotify.com/artist/4M3lU9S2EOriC8OBbrDgAK">Spotify</a>
-                    <a target="_blank" href="https://scratchboi28.bandcamp.com/">Bandcamp</a>
-                    <a target="_blank" href="https://genius.com/SCRATCHBOI28">Genius</a>
-                    <a target="_blank" href="https://phonk.fandom.com/wiki/SB28">Wiki</a>
+                  <td>
+                    <div class="linkset">
+                      <!-- 1 Wiki -->
+                      <a class="lbtn" target="_blank" href="https://phonk.fandom.com/wiki/SB28">Phonk Wiki</a>
+                      <!-- 2 YouTube (missing) -->
+                      <span class="lbtn missing" data-tip="No record in archives yet.">YouTube</span>
+                      <!-- 3 Spotify -->
+                      <a class="lbtn" target="_blank" href="https://open.spotify.com/artist/4M3lU9S2EOriC8OBbrDgAK">Spotify</a>
+                      <!-- 4 Bandcamp -->
+                      <a class="lbtn" target="_blank" href="https://scratchboi28.bandcamp.com/">Bandcamp</a>
+                      <!-- 5 SoundCloud (missing) -->
+                      <span class="lbtn missing" data-tip="No record in archives yet.">SoundCloud</span>
+                      <!-- 6 Audiotool (missing) -->
+                      <span class="lbtn missing" data-tip="No record in archives yet.">Audiotool</span>
+
+                      <button class="morebtn" type="button">MORE</button>
+                    </div>
                   </td>
                 </tr>
 
+                <!-- duckie -->
                 <tr>
                   <td class="idcol">98G-DK-004</td>
                   <td><b>duckie</b></td>
                   <td class="role">Producer</td>
-                  <td class="links">
-                    <a target="_blank" href="https://www.youtube.com/@duckiebeats">YouTube</a>
-                    <a target="_blank" href="https://soundcloud.com/duckiebeats">SoundCloud</a>
-                    <a target="_blank" href="https://phonk.fandom.com/wiki/Duckie">Wiki</a>
+                  <td>
+                    <div class="linkset">
+                      <!-- 1 Wiki -->
+                      <a class="lbtn" target="_blank" href="https://phonk.fandom.com/wiki/Duckie">Phonk Wiki</a>
+                      <!-- 2 YouTube -->
+                      <a class="lbtn" target="_blank" href="https://www.youtube.com/@duckiebeats">YouTube</a>
+                      <!-- 3 Spotify (missing) -->
+                      <span class="lbtn missing" data-tip="No record in archives yet.">Spotify</span>
+                      <!-- 4 Bandcamp (missing) -->
+                      <span class="lbtn missing" data-tip="No record in archives yet.">Bandcamp</span>
+                      <!-- 5 SoundCloud -->
+                      <a class="lbtn" target="_blank" href="https://soundcloud.com/duckiebeats">SoundCloud</a>
+                      <!-- 6 Audiotool (missing) -->
+                      <span class="lbtn missing" data-tip="No record in archives yet.">Audiotool</span>
+
+                      <button class="morebtn" type="button">MORE</button>
+                    </div>
                   </td>
                 </tr>
 
@@ -371,5 +474,15 @@
       <div class="copyright">© 2014 98gang</div>
     </section>
   </main>
+
+  <script>
+    // Toggle MORE / LESS per row
+    document.querySelectorAll('.morebtn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tr = btn.closest('tr');
+        tr.classList.toggle('expanded');
+      });
+    });
+  </script>
 </body>
 </html>
