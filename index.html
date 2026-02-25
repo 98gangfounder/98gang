@@ -216,70 +216,59 @@
     .role{ white-space:nowrap; font-weight:700; color:#333; }
     .idcol{ white-space:nowrap; font-family:"Courier New", monospace; color:#333; }
 
-    /* link buttons */
-    .linkset{
+    /* LINKS: plain text, underlined (not buttons) */
+    .linkwrap{
       display:flex;
-      flex-wrap:wrap;
-      gap:6px;
-      align-items:flex-start;
+      gap:10px;
+      align-items:baseline;
+      flex-wrap:nowrap; /* collapsed: single line */
+      white-space:nowrap;
     }
-    .lbtn, .morebtn{
-      position:relative;
-      display:inline-block;
-      font-size:12px;
-      padding:6px 8px;
-      border:1px solid #7e7e7e;
-      background: linear-gradient(#ffffff, #dcdcdc);
-      box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #b0b0b0;
+    .lnk{
       color:#000;
       text-decoration:none;
-      white-space:nowrap;
-      cursor:pointer;
-      user-select:none;
+      border-bottom:1px dotted rgba(0,0,0,.55);
+      padding-bottom:1px;
     }
-    .lbtn:hover, .morebtn:hover{
-      background: linear-gradient(#fff7cc, #e7d59a);
+    .lnk:hover{
+      border-bottom-color:#000;
     }
-    .morebtn{
+    .missing{
+      color:#444;
+      opacity:.55;
+      cursor:help;
+      border-bottom:1px dotted rgba(0,0,0,.35);
+    }
+
+    .more{
+      color:#000;
+      text-decoration:none;
+      border-bottom:1px solid rgba(0,0,0,.8);
       font-weight:700;
       letter-spacing:.2px;
+      cursor:pointer;
+      padding-bottom:1px;
+      margin-left:6px;
     }
+    .more:hover{ border-bottom-color:#000; }
 
-    /* missing link style + tooltip */
-    .missing{
-      opacity:.65;
-      cursor:not-allowed;
-    }
-    .missing:hover{
-      background: linear-gradient(#ffffff, #dcdcdc);
-    }
-    .missing[data-tip]:hover::after{
-      content: attr(data-tip);
-      position:absolute;
-      left:0;
-      top: calc(100% + 6px);
-      background: rgba(0,0,0,.88);
-      color:#fff;
-      padding:6px 8px;
-      border:1px solid rgba(255,255,255,.18);
-      font-size:12px;
-      border-radius:0;
-      z-index:9999;
-      min-width: 180px;
-      white-space:normal;
-      box-shadow: 6px 6px 0 rgba(0,0,0,.35);
-    }
-
-    /* collapsed: show only first 3 buttons + MORE */
-    tr:not(.expanded) .linkset .lbtn:nth-of-type(n+4){
+    /* collapsed state: show only first 3 links (Wiki/YouTube/Spotify) */
+    tr:not(.expanded) .linkwrap .lnk:nth-of-type(n+4),
+    tr:not(.expanded) .linkwrap .missing:nth-of-type(n+4){
       display:none;
     }
-    /* MORE button always visible */
-    tr.expanded .morebtn::before{ content:"LESS"; }
-    tr:not(.expanded) .morebtn::before{ content:"MORE"; }
-    /* hide the literal text inside button (so only ::before shows) */
-    .morebtn{ color:transparent; }
-    .morebtn::before{ color:#000; }
+
+    /* expanded state: allow wrapping -> row becomes "thicker" */
+    tr.expanded .linkwrap{
+      flex-wrap:wrap;
+      white-space:normal;
+    }
+
+    /* MORE/Less text switch */
+    tr.expanded .more::after{ content:"[LESS]"; }
+    tr:not(.expanded) .more::after{ content:"[MORE]"; }
+    .more{ color:transparent; }
+    .more::after{ color:#000; }
 
     @media (max-width: 900px){
       .tablescroll{ overflow:auto; }
@@ -359,7 +348,7 @@
                   <th style="width:140px;">ID</th>
                   <th style="width:200px;">NAME</th>
                   <th style="width:240px;">ROLE</th>
-                  <th>LINKS (TOP 3 + MORE)</th>
+                  <th>LINKS</th>
                 </tr>
               </thead>
               <tbody>
@@ -370,21 +359,15 @@
                   <td><b>SayRex</b></td>
                   <td class="role">Founder / Producer / Rapper</td>
                   <td>
-                    <div class="linkset">
-                      <!-- 1 Wiki -->
-                      <a class="lbtn" target="_blank" href="https://phonk.fandom.com/wiki/SayRex">Phonk Wiki</a>
-                      <!-- 2 YouTube -->
-                      <a class="lbtn" target="_blank" href="https://www.youtube.com/@98gangfounder">YouTube</a>
-                      <!-- 3 Spotify -->
-                      <a class="lbtn" target="_blank" href="https://open.spotify.com/artist/6Gk9FDaTJNMXS1LL6uK30s">Spotify</a>
-                      <!-- 4 Bandcamp -->
-                      <a class="lbtn" target="_blank" href="https://98gangfounder.bandcamp.com/">Bandcamp</a>
-                      <!-- 5 SoundCloud -->
-                      <a class="lbtn" target="_blank" href="https://soundcloud.com/98gangfounder">SoundCloud</a>
-                      <!-- 6 Audiotool -->
-                      <a class="lbtn" target="_blank" href="https://www.audiotool.com/user/d3athmane">Audiotool</a>
-
-                      <button class="morebtn" type="button">MORE</button>
+                    <div class="linkwrap">
+                      <!-- order: Wiki, YouTube, Spotify, Bandcamp, SoundCloud, Audiotool -->
+                      <a class="lnk" target="_blank" href="https://phonk.fandom.com/wiki/SayRex">Phonk Wiki</a>
+                      <a class="lnk" target="_blank" href="https://www.youtube.com/@98gangfounder">YouTube</a>
+                      <a class="lnk" target="_blank" href="https://open.spotify.com/artist/6Gk9FDaTJNMXS1LL6uK30s">Spotify</a>
+                      <a class="lnk" target="_blank" href="https://98gangfounder.bandcamp.com/">Bandcamp</a>
+                      <a class="lnk" target="_blank" href="https://soundcloud.com/98gangfounder">SoundCloud</a>
+                      <a class="lnk" target="_blank" href="https://www.audiotool.com/user/d3athmane">Audiotool</a>
+                      <span class="more" role="button" tabindex="0"></span>
                     </div>
                   </td>
                 </tr>
@@ -395,21 +378,14 @@
                   <td><b>Zack Reyes</b></td>
                   <td class="role">Producer</td>
                   <td>
-                    <div class="linkset">
-                      <!-- 1 Wiki -->
-                      <a class="lbtn" target="_blank" href="https://phonk.fandom.com/wiki/Zack_Reyes">Phonk Wiki</a>
-                      <!-- 2 YouTube (missing) -->
-                      <span class="lbtn missing" data-tip="No record in archives yet.">YouTube</span>
-                      <!-- 3 Spotify -->
-                      <a class="lbtn" target="_blank" href="https://open.spotify.com/artist/0CKVsZTnpLwT2iYIwJzCzp">Spotify</a>
-                      <!-- 4 Bandcamp (missing) -->
-                      <span class="lbtn missing" data-tip="No record in archives yet.">Bandcamp</span>
-                      <!-- 5 SoundCloud (missing) -->
-                      <span class="lbtn missing" data-tip="No record in archives yet.">SoundCloud</span>
-                      <!-- 6 Audiotool -->
-                      <a class="lbtn" target="_blank" href="https://www.audiotool.com/user/skittles761">Audiotool</a>
-
-                      <button class="morebtn" type="button">MORE</button>
+                    <div class="linkwrap">
+                      <a class="lnk" target="_blank" href="https://phonk.fandom.com/wiki/Zack_Reyes">Phonk Wiki</a>
+                      <span class="missing" title="No record in archives yet.">YouTube</span>
+                      <a class="lnk" target="_blank" href="https://open.spotify.com/artist/0CKVsZTnpLwT2iYIwJzCzp">Spotify</a>
+                      <span class="missing" title="No record in archives yet.">Bandcamp</span>
+                      <span class="missing" title="No record in archives yet.">SoundCloud</span>
+                      <a class="lnk" target="_blank" href="https://www.audiotool.com/user/skittles761">Audiotool</a>
+                      <span class="more" role="button" tabindex="0"></span>
                     </div>
                   </td>
                 </tr>
@@ -420,21 +396,14 @@
                   <td><b>SB28</b></td>
                   <td class="role">Producer</td>
                   <td>
-                    <div class="linkset">
-                      <!-- 1 Wiki -->
-                      <a class="lbtn" target="_blank" href="https://phonk.fandom.com/wiki/SB28">Phonk Wiki</a>
-                      <!-- 2 YouTube (missing) -->
-                      <span class="lbtn missing" data-tip="No record in archives yet.">YouTube</span>
-                      <!-- 3 Spotify -->
-                      <a class="lbtn" target="_blank" href="https://open.spotify.com/artist/4M3lU9S2EOriC8OBbrDgAK">Spotify</a>
-                      <!-- 4 Bandcamp -->
-                      <a class="lbtn" target="_blank" href="https://scratchboi28.bandcamp.com/">Bandcamp</a>
-                      <!-- 5 SoundCloud (missing) -->
-                      <span class="lbtn missing" data-tip="No record in archives yet.">SoundCloud</span>
-                      <!-- 6 Audiotool (missing) -->
-                      <span class="lbtn missing" data-tip="No record in archives yet.">Audiotool</span>
-
-                      <button class="morebtn" type="button">MORE</button>
+                    <div class="linkwrap">
+                      <a class="lnk" target="_blank" href="https://phonk.fandom.com/wiki/SB28">Phonk Wiki</a>
+                      <span class="missing" title="No record in archives yet.">YouTube</span>
+                      <a class="lnk" target="_blank" href="https://open.spotify.com/artist/4M3lU9S2EOriC8OBbrDgAK">Spotify</a>
+                      <a class="lnk" target="_blank" href="https://scratchboi28.bandcamp.com/">Bandcamp</a>
+                      <span class="missing" title="No record in archives yet.">SoundCloud</span>
+                      <span class="missing" title="No record in archives yet.">Audiotool</span>
+                      <span class="more" role="button" tabindex="0"></span>
                     </div>
                   </td>
                 </tr>
@@ -445,21 +414,14 @@
                   <td><b>duckie</b></td>
                   <td class="role">Producer</td>
                   <td>
-                    <div class="linkset">
-                      <!-- 1 Wiki -->
-                      <a class="lbtn" target="_blank" href="https://phonk.fandom.com/wiki/Duckie">Phonk Wiki</a>
-                      <!-- 2 YouTube -->
-                      <a class="lbtn" target="_blank" href="https://www.youtube.com/@duckiebeats">YouTube</a>
-                      <!-- 3 Spotify (missing) -->
-                      <span class="lbtn missing" data-tip="No record in archives yet.">Spotify</span>
-                      <!-- 4 Bandcamp (missing) -->
-                      <span class="lbtn missing" data-tip="No record in archives yet.">Bandcamp</span>
-                      <!-- 5 SoundCloud -->
-                      <a class="lbtn" target="_blank" href="https://soundcloud.com/duckiebeats">SoundCloud</a>
-                      <!-- 6 Audiotool (missing) -->
-                      <span class="lbtn missing" data-tip="No record in archives yet.">Audiotool</span>
-
-                      <button class="morebtn" type="button">MORE</button>
+                    <div class="linkwrap">
+                      <a class="lnk" target="_blank" href="https://phonk.fandom.com/wiki/Duckie">Phonk Wiki</a>
+                      <a class="lnk" target="_blank" href="https://www.youtube.com/@duckiebeats">YouTube</a>
+                      <span class="missing" title="No record in archives yet.">Spotify</span>
+                      <span class="missing" title="No record in archives yet.">Bandcamp</span>
+                      <a class="lnk" target="_blank" href="https://soundcloud.com/duckiebeats">SoundCloud</a>
+                      <span class="missing" title="No record in archives yet.">Audiotool</span>
+                      <span class="more" role="button" tabindex="0"></span>
                     </div>
                   </td>
                 </tr>
@@ -476,11 +438,16 @@
   </main>
 
   <script>
-    // Toggle MORE / LESS per row
-    document.querySelectorAll('.morebtn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const tr = btn.closest('tr');
-        tr.classList.toggle('expanded');
+    // Toggle expand/collapse per row via [MORE]/[LESS]
+    document.querySelectorAll('tbody tr').forEach(tr => {
+      const more = tr.querySelector('.more');
+      if(!more) return;
+
+      const toggle = () => tr.classList.toggle('expanded');
+
+      more.addEventListener('click', toggle);
+      more.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') toggle();
       });
     });
   </script>
